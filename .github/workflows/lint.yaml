@@ -1,0 +1,36 @@
+name: github-actions/lint
+on:
+  pull_request:
+    branches:
+      - develop
+
+  push:
+    branches:
+      - develop
+
+jobs:
+  lint:
+    name: Lint and Type check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ./node_modules
+          key: node-${{ hashFiles('yarn.lock') }}
+          restore-keys: node-
+
+      - name: Install packages
+        run: yarn
+
+      - name: Run syntax check
+        run: yarn type-check
+
+      - name: Run lint
+        run: yarn lint
