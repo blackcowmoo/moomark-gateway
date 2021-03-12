@@ -1,4 +1,4 @@
-name: github-actions/pull-request/build
+name: github-actions/build
 on:
   pull_request:
     branches:
@@ -26,26 +26,13 @@ jobs:
           key: node-${{ hashFiles('yarn.lock') }}
           restore-keys: node-
 
-      - name: Cache node modules
-        uses: actions/cache@v1
-        with:
-          path: ./gateway/node_modules
-          key: gateway-node-${{ hashFiles('yarn.lock') }}
-          restore-keys: gateway-node-
-
-      - name: Install global packages
-        run: yarn
-
       - name: Install packages
-        working-directory: gateway
         run: yarn
 
       - name: Run build
-        working-directory: gateway
         run: yarn build
 
       - name: Run test
-        working-directory: gateway
         run: yarn test
         env:
           CI: true

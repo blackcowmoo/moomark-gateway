@@ -1,4 +1,4 @@
-name: github-actions/pull-request/lint
+name: github-actions/lint
 on:
   pull_request:
     branches:
@@ -26,24 +26,11 @@ jobs:
           key: node-${{ hashFiles('yarn.lock') }}
           restore-keys: node-
 
-      - name: Cache node modules
-        uses: actions/cache@v1
-        with:
-          path: ./gateway/node_modules
-          key: gateway-node-${{ hashFiles('yarn.lock') }}
-          restore-keys: gateway-node-
-
-      - name: Install global packages
-        run: yarn
-
       - name: Install packages
-        working-directory: gateway
         run: yarn
 
       - name: Run syntax check
-        working-directory: gateway
         run: yarn type-check
 
       - name: Run lint
-        working-directory: gateway
         run: yarn lint

@@ -1,4 +1,4 @@
-name: github-actions/pull-request/docker-build
+name: github-actions/docker-build
 on:
   pull_request:
     branches:
