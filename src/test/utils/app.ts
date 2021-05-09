@@ -13,28 +13,28 @@ interface ChaiRequest {
 }
 
 export const request = async (method: 'get' | 'post', path: string, { headers, body, query }: ChaiRequest) => {
-  const request = chai.request(app)[method](path);
+  const r = chai.request(app)[method](path);
 
   if (headers) {
     for (const [key, value] of Object.entries(headers)) {
-      request.set(key, value);
+      r.set(key, value);
     }
   }
 
   if (query) {
-    request.query(query);
+    r.query(query);
   }
 
   if (body) {
-    request.send(body);
+    r.send(body);
   }
 
   return new Promise<Response>((resolve, reject) => {
-    request.end((err, res) => {
+    r.end((err, res) => {
       if (err) {
         reject(err);
       } else {
-        resolve(res);
+        resolve(res as Response);
       }
     });
   });

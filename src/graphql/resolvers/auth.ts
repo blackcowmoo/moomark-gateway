@@ -1,5 +1,5 @@
 export const Mutation = {
-  login: async (_: any, __: any, ___: any) => {
+  login: async () => {
     return 'login';
   },
 };

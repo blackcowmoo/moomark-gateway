@@ -28,6 +28,7 @@
     "object-curly-newline": ["off"],
     "lines-between-class-members": ["off"],
     "implicit-arrow-linebreak": ["off"],
-    "arrow-body-style": ["off"]
+    "arrow-body-style": ["off"],
+    "no-console": ["off"]
   }
 }
