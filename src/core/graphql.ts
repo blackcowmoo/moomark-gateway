@@ -5,4 +5,6 @@ import { resolvers } from '@/graphql/resolvers';
 export default new ApolloServer({
   typeDefs,
   resolvers,
+  introspection: process.env.deployEnv === 'dev',
+  playground: process.env.deployEnv === 'dev',
 });
