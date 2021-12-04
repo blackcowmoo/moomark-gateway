@@ -1,3 +1,4 @@
+import { generateSession } from '@/core/session';
 import { endpoints } from '@/core/config';
 import axios from 'axios';
 
@@ -10,11 +11,12 @@ export const googleLogin = async (code) => {
             scope: 'email profile https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email openid',
             authuser: 0,
             prompt: 'consent'
+        },
+        headers: {
+            Cookie: generateSession()
         }
     });
 
     console.log(JSON.stringify(result));
     return result;
 }
-
-
