@@ -13,7 +13,9 @@ const generateSession = async () => {
     validateStatus: (status) => status === 302,
   });
 
-  console.log(JSON.stringify(result));
+  console.log(JSON.stringify(result.status));
+  console.log(JSON.stringify(result.headers));
+  console.log(JSON.stringify(result.data));
   return result;
 };
 
