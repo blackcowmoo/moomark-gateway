@@ -13,7 +13,7 @@ const generateSession = async () => {
     validateStatus: (status) => status === 302,
   });
 
-  console.log(result);
+  console.log(JSON.stringify(result));
   return result;
 };
 
