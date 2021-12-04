@@ -4,7 +4,7 @@ interface EndpointOption {
   path?: string;
   protocol?: string;
 }
-const buildEndpoint = ({ host, port, path, protocol }: EndpointOption) => `${protocol || 'http'}://${host}:${port}/${path}`;
+const buildEndpoint = ({ host, port, protocol }: EndpointOption) => `${protocol || 'http'}://${host}:${port}`;
 
 interface Endpoint {
   endpoint: string;
