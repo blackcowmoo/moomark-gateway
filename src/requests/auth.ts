@@ -10,18 +10,16 @@ const authAxios = axios.create({
 
 const generateSession = async () => {
   const result = await authAxios.get('/login/session', {
+    headers: { Accept: '*/*' },
     validateStatus: (status) => status === 302,
     withCredentials: true,
   });
 
-  console.log(JSON.stringify(result.status));
-  console.log(JSON.stringify(result.headers));
-  console.log(JSON.stringify(result.data));
-  return result;
+  const [session] = result.headers['set-cookie'];
+  return session.split(';')[0];
 };
 
 export const googleLogin = async (code) => {
-  await generateSession();
   const result = await authAxios.get('/login/oauth2/code/google', {
     params: {
       code,
@@ -29,11 +27,12 @@ export const googleLogin = async (code) => {
       authuser: 0,
       prompt: 'consent',
     },
-    // headers: {
-    //   Cookie: generateSession(),
-    // },
+    headers: {
+      Cookie: await generateSession(),
+    },
+    validateStatus: (status) => status === 302,
   });
 
-  console.log(JSON.stringify(result));
+  console.log(JSON.stringify(result.headers));
   return result;
 };
