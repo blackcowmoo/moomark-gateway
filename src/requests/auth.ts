@@ -23,7 +23,7 @@ const parseSession = (cookie: string) => {
   return cookie.split(';')[0].split('=')[1];
 };
 
-export const googleLogin = async (code) => {
+export const googleLogin = async (code: string) => {
   const session = await generateSession();
   const result = await authAxios.get('/login/oauth2/code/google', {
     params: {
