@@ -23,10 +23,11 @@ const parseSession = (cookie: string) => {
   return cookie.split(';')[0].split('=')[1];
 };
 
-export const googleLogin = async (code: string) => {
+export const googleLogin = async (state: string, code: string) => {
   const session = await generateSession();
   const result = await authAxios.get('/login/oauth2/code/google', {
     params: {
+      state,
       code,
       scope: 'email profile https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email openid',
       authuser: 0,
