@@ -19,7 +19,12 @@ const generateSession = async () => {
   return session.split(';')[0];
 };
 
+const parseSession = (cookie: string) => {
+  return cookie.split(';')[0].split('=')[1];
+};
+
 export const googleLogin = async (code) => {
+  const session = await generateSession();
   const result = await authAxios.get('/login/oauth2/code/google', {
     params: {
       code,
@@ -27,12 +32,10 @@ export const googleLogin = async (code) => {
       authuser: 0,
       prompt: 'consent',
     },
-    headers: {
-      Cookie: await generateSession(),
-    },
+    headers: { Cookie: session },
     validateStatus: (status) => status === 302,
   });
 
   console.log(JSON.stringify(result.headers));
-  return result;
+  return parseSession(session);
 };
