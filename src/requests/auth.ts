@@ -6,11 +6,13 @@ const authAxios = axios.create({
   baseURL: authServerHost,
   maxRedirects: 0,
   headers: { Accept: 'application/json' },
-  validateStatus: (status) => status >= 200 && status < 400,
 });
 
 const generateSession = async () => {
-  const result = await authAxios.get('/login/session');
+  const result = await authAxios.get('/login/session', {
+    validateStatus: (status) => status === 302,
+  });
+
   console.log(result);
   return result;
 };
