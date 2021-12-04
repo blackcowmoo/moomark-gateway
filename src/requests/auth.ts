@@ -32,7 +32,10 @@ export const googleLogin = async (code) => {
       authuser: 0,
       prompt: 'consent',
     },
-    headers: { Cookie: session },
+    headers: {
+      Cookie: session,
+      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    },
     validateStatus: (status) => status === 302,
   });
 
