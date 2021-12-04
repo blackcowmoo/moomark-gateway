@@ -25,7 +25,6 @@
     "@types/mocha": "^7.0.2",
     "@types/node": "^14.0.13",
     "@types/superagent": "^4.1.11",
-    "@types/uuid": "^8.3.3",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "babel-plugin-module-resolver": "^4.0.0",
@@ -44,7 +43,6 @@
     "axios": "^0.19.2",
     "express": "^4.17.1",
     "graphql": "^15.5.0",
-    "superagent": "^6.1.0",
-    "uuid": "^8.3.2"
+    "superagent": "^6.1.0"
   }
 }
