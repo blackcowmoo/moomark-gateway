@@ -2,7 +2,7 @@ import { endpoints } from '@/core/config';
 import axios from 'axios';
 
 const authServerHost = endpoints.auth.endpoint;
-const authAxios = axios.create({ baseURL: authServerHost, maxRedirects: 0 });
+const authAxios = axios.create({ baseURL: authServerHost, maxRedirects: 0, headers: { Accept: 'application/json' } });
 
 const generateSession = async () => {
   const result = await authAxios.get('/login/session');
