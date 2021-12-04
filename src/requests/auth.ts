@@ -11,6 +11,7 @@ const authAxios = axios.create({
 const generateSession = async () => {
   const result = await authAxios.get('/login/session', {
     validateStatus: (status) => status === 302,
+    withCredentials: true,
   });
 
   console.log(JSON.stringify(result.status));
