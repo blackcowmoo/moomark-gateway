@@ -1,4 +1,4 @@
-name: github-actions/lint
+name: github-actions/build
 on:
   pull_request:
     branches:
@@ -9,8 +9,8 @@ on:
       - develop
 
 jobs:
-  lint:
-    name: Lint and Type check
+  build:
+    name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
@@ -27,8 +27,10 @@ jobs:
       - name: Install packages
         run: yarn
 
-      - name: Run syntax check
-        run: yarn type-check
+      - name: Run build
+        run: yarn build
 
-      - name: Run lint
-        run: yarn lint
+      - name: Run test
+        run: yarn test
+        env:
+          CI: true
