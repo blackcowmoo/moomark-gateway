@@ -10,7 +10,7 @@ const rootQuerySchema = gql`
 
 const rootMutationSchema = gql`
   type Mutation {
-    request(method: String!, service: String!, url: String!, body: String, header: String, params: String): String!
+    request(method: String!, service: String!, url: String!, body: String, headers: String, params: String): String!
     login(type: String!, code: String!, state: String): String!
   }
 `;

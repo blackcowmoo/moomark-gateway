@@ -32,13 +32,13 @@ const rootQueryResolvers = {
 
 const rootMutationResolvers = {
   Mutation: {
-    request: async (_, { method, service, url, body, header, params }) => {
+    request: async (_, { method, service, url, body, headers, params }) => {
       const result = await axios({
         method,
-        url,
         baseURL: endpoints[service].endpoint,
+        url,
         data: JSON.parse(body || "{}"),
-        header: Object.assign(JSON.parse(header || "{}"), { "Content-Type": "application/json" }),
+        headers: Object.assign(JSON.parse(headers || "{}"), { "Content-Type": "application/json" }),
         params: JSON.parse(params || "{}")
       });
 
