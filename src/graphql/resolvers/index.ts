@@ -2,7 +2,7 @@ import { endpoints } from '@/core/config';
 import axios from 'axios';
 import * as auth from './auth';
 
-const rootResolvers = {
+const rootQueryResolvers = {
   Query: {
     healthz: () => 'OK',
     servers: async () => {
@@ -30,4 +30,21 @@ const rootResolvers = {
   },
 };
 
-export const resolvers = [rootResolvers, auth];
+const rootMutationResolvers = {
+  Mutation: {
+    request: async (_, { method, service, url, body, header, params }) => {
+      const result = await axios({
+        method,
+        url,
+        baseURL: endpoints[service].endpoint,
+        data: JSON.parse(body || "{}"),
+        header: Object.assign(JSON.parse(header || "{}"), { "Content-Type": "application/json" }),
+        params: JSON.parse(params || "{}")
+      });
+
+      return JSON.stringify({ headers: result.headers, status: result.status, data: result.data })
+    }
+  }
+}
+
+export const resolvers = [rootQueryResolvers, rootMutationResolvers, auth];
