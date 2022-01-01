@@ -33,6 +33,9 @@ const rootQueryResolvers = {
 const rootMutationResolvers = {
   Mutation: {
     request: async (_, { method, service, url, body, headers, params }) => {
+      if (process.env.DEPLOY_ENV !== 'dev') {
+        return "Forbidden"
+      }
       const result = await axios({
         method,
         baseURL: endpoints[service].endpoint,
