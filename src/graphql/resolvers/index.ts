@@ -45,7 +45,7 @@ const rootMutationResolvers = {
         params: JSON.parse(params || "{}")
       });
 
-      return JSON.stringify({ headers: result.headers, status: result.status, data: result.data })
+      return { headers: Object.entries(result.headers).map(([key, value]) => `${key}=${value}`), status: result.status, data: result.data }
     }
   }
 }
