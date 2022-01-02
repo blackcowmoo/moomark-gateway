@@ -8,11 +8,19 @@ const rootQuerySchema = gql`
   }
 `;
 
+const devRequestType = gql`
+  type devRequest {
+    headers: [String]!
+    status: Int!
+    data: String!
+  }
+`
+
 const rootMutationSchema = gql`
   type Mutation {
-    request(method: String!, service: String!, url: String!, body: String, headers: String, params: String): String!
+    request(method: String!, service: String!, url: String!, body: String, headers: String, params: String): devRequest!
     login(type: String!, code: String!, state: String): String!
   }
 `;
 
-export const typeDefs = [rootQuerySchema, rootMutationSchema];
+export const typeDefs = [devRequestType, rootQuerySchema, rootMutationSchema];
