@@ -1,12 +1,12 @@
-import { googleLogin } from '@/requests/auth';
+// import { googleLogin } from '@/requests/auth';
 
 export const Mutation = {
   login: async (_, { type, code, state }) => {
     switch (type.toLowerCase()) {
       case 'google':
-        return googleLogin(state, code);
+        return 'google:' + code;
       case 'github':
-        return 'github: ' + code;
+        return 'github:' + code;
       default:
         return '';
     }
