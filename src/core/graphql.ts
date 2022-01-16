@@ -15,7 +15,7 @@ export default new ApolloServer({
       routes = Object.entries(req.headers)
         .map(([key, value]) => ([key.toUpperCase(), value] as Header))
         .filter(([key]) => key.startsWith('X-MOOM-ROUTE-'))
-        .reduce((p, v) => Object.assign(p, { [v[0]]: v[1] }, {}));
+        .reduce((p, v) => Object.assign(p, { [v[0]]: v[1] }), {});
     }
 
     return { routes };
