@@ -26,7 +26,6 @@ const authAxios = axios.create({
 export const googleLogin = async (state: string, code: string, routes: { [KEY: string]: string }) => {
   const result = await authAxios.get('/login/oauth2/code/google', {
     params: {
-      state,
       code,
       scope: 'email profile https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email openid',
     },
