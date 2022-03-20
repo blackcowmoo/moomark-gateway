@@ -5,8 +5,8 @@ export const Mutation = {
     switch (type.toLowerCase()) {
       case 'google':
         return googleLogin(state, code);
-      case 'github':
-        return 'github: ' + code;
+      // case 'github':
+      //   return 'github: ' + code;
       default:
         return '';
     }
