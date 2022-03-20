@@ -34,20 +34,20 @@ const rootMutationResolvers = {
   Mutation: {
     request: async (_, { method, service, url, body, headers, params }) => {
       if (process.env.DEPLOY_ENV !== 'dev') {
-        return "Forbidden"
+        return 'Forbidden';
       }
       const result = await axios({
         method,
         baseURL: endpoints[service].endpoint,
         url,
-        data: JSON.parse(body || "{}"),
-        headers: Object.assign(JSON.parse(headers || "{}"), { "Content-Type": "application/json" }),
-        params: JSON.parse(params || "{}")
+        data: JSON.parse(body || '{}'),
+        headers: Object.assign(JSON.parse(headers || '{}'), { 'Content-Type': 'application/json' }),
+        params: JSON.parse(params || '{}'),
       });
 
-      return { headers: Object.entries(result.headers).map(([key, value]) => `${key}=${value}`), status: result.status, data: result.data }
-    }
-  }
-}
+      return { headers: Object.entries(result.headers).map(([key, value]) => `${key}=${value}`), status: result.status, data: result.data };
+    },
+  },
+};
 
 export const resolvers = [rootQueryResolvers, rootMutationResolvers, auth];
