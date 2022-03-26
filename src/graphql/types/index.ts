@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server-express';
-// import auth from './auth';
+import authType from './auth';
 
 const rootQuerySchema = gql`
   type Query {
@@ -14,13 +14,13 @@ const devRequestType = gql`
     status: Int!
     data: String!
   }
-`
+`;
 
 const rootMutationSchema = gql`
   type Mutation {
     request(method: String!, service: String!, url: String!, body: String, headers: String, params: String): devRequest!
-    login(type: String!, code: String!, state: String): String!
+    login(type: String!, code: String!): Login!
   }
 `;
 
-export const typeDefs = [devRequestType, rootQuerySchema, rootMutationSchema];
+export const typeDefs = [authType, devRequestType, rootQuerySchema, rootMutationSchema];

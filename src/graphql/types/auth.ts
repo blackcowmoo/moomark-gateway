@@ -7,7 +7,7 @@ export default gql`
     # user: User
   }
 
-  type Mutation {
-    login(type: String!, code: String!, state: String): Login!
-  }
+  # type Mutation {
+  #   login(type: String!, code: String!, state: String): Login!
+  # }
 `;
