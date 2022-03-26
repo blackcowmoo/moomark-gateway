@@ -26,7 +26,10 @@ const authAxios = axios.create({
 export const googleLogin = async (code: string, routes: { [KEY: string]: string }) => {
   const result = await authAxios.get('/api/v1/oauth2/google', {
     params: { code },
-    headers: routes,
+    headers: {
+      ...routes,
+      Accept: 'application/json',
+    },
   });
 
   console.log(result.data);
