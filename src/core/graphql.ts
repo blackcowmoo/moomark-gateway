@@ -13,7 +13,7 @@ export default new ApolloServer({
     let routes = {};
     if (process.env.DEPLOY_ENV === 'dev') {
       routes = Object.entries(req.headers)
-        .map(([key, value]) => ([key.toUpperCase(), value] as Header))
+        .map(([key, value]) => [key.toUpperCase(), value] as Header)
         .filter(([key]) => key.startsWith('X-MOOM-ROUTE-'))
         .reduce((p, v) => Object.assign(p, { [v[0]]: v[1] }), {});
     }

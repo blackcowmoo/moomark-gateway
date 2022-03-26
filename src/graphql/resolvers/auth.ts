@@ -1,13 +1,12 @@
-// import { googleLogin } from '@/requests/auth';
+import { googleLogin } from '@/requests/auth';
 
 export const Mutation = {
-  login: async (_, { type, code, state }, { routes }) => {
-    console.log(JSON.stringify(routes));
+  login: async (_, { type, code }, { routes }) => {
     switch (type.toLowerCase()) {
       case 'google':
-        return 'google:' + code;
-      case 'github':
-        return 'github:' + code;
+        return googleLogin(code, routes);
+      // case 'github':
+      //   return 'github: ' + code;
       default:
         return '';
     }
