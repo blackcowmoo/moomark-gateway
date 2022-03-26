@@ -30,5 +30,5 @@ export const googleLogin = async (code: string, routes: { [KEY: string]: string 
   });
 
   console.log(JSON.stringify(result.data));
-  return JSON.parse(result.data);
+  return result.data;
 };
