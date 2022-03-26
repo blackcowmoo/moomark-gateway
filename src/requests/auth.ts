@@ -23,22 +23,12 @@ const authAxios = axios.create({
 //   return cookie.split(';')[0].split('=')[1];
 // };
 
-export const googleLogin = async (state: string, code: string, routes: { [KEY: string]: string }) => {
-  const result = await authAxios.get('/login/oauth2/code/google', {
-    params: {
-      state,
-      code,
-      scope: 'openid profile email',
-    },
+export const googleLogin = async (code: string, routes: { [KEY: string]: string }) => {
+  const result = await authAxios.post('/api/v1/oauth2/google', {
+    params: { code },
     headers: routes,
-    // headers: {
-    //   Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-    // },
-    // validateStatus: (status) => status === 302,
   });
 
-  // console.log(JSON.stringify(result.headers));
-  // return parseSession(result.data);
   console.log(JSON.stringify(result.data));
   return result.data;
 };
