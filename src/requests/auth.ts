@@ -29,5 +29,6 @@ export const googleLogin = async (code: string, routes: { [KEY: string]: string 
     headers: routes,
   });
 
+  console.log(result.data);
   return JSON.parse(result.data);
 };
