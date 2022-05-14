@@ -6,6 +6,8 @@ const rootQuerySchema = gql`
   type Query {
     healthz: String!
     servers: String!
+
+    user: User
   }
 `;
 
