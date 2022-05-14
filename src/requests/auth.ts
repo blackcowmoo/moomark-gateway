@@ -1,5 +1,21 @@
 import { endpoints } from '@/core/config';
+import { Route } from '@/core/graphql';
 import axios from 'axios';
+
+interface LoginTokens {
+  token: string;
+  refreshToken: string;
+}
+
+export interface User {
+  authProvider: string;
+  id: string;
+  name: string;
+  email: string;
+  nickname: string;
+  picture: string;
+  role: string;
+}
 
 const authServerHost = endpoints.auth.endpoint;
 const authAxios = axios.create({
@@ -8,22 +24,15 @@ const authAxios = axios.create({
   headers: { Accept: 'application/json' },
 });
 
-// const generateSession = async () => {
-//   const result = await authAxios.get('/login/session', {
-//     headers: { Accept: '*/*' },
-//     validateStatus: (status) => status === 302,
-//     withCredentials: true,
-//   });
+export const getUser = async (token: string, routes): Promise<User> => {
+  const result = await authAxios.get('/api/v1/user', {
+    headers: { authorization: token, ...routes },
+  });
 
-//   const [session] = result.headers['set-cookie'];
-//   return session.split(';')[0];
-// };
+  return result.data;
+};
 
-// const parseSession = (cookie: string) => {
-//   return cookie.split(';')[0].split('=')[1];
-// };
-
-export const googleLogin = async (code: string, routes: { [KEY: string]: string }) => {
+export const googleLogin = async (code: string, routes: Route): Promise<LoginTokens> => {
   const result = await authAxios.get('/api/v1/oauth2/google', {
     params: { code },
     headers: routes,

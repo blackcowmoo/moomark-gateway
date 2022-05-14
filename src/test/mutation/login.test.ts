@@ -5,7 +5,10 @@ describe('GraphQL', () => {
   it('Login', async () => {
     const query = graphql`
       mutation {
-        login(type: "Google", code: "")
+        login(type: "Google", code: "test") {
+          token
+          refreshToken
+        }
       }
     `;
 
