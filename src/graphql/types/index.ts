@@ -1,21 +1,16 @@
 import { gql } from 'apollo-server-express';
 import authType from './auth';
+import { devRequestType } from './test';
 import userType from './user';
 
 const rootQuerySchema = gql`
   type Query {
+    # test
     healthz: String!
     servers: String!
 
+    # auth
     user: User
-  }
-`;
-
-const devRequestType = gql`
-  type devRequest {
-    headers: [String]!
-    status: Int!
-    data: String!
   }
 `;
 
