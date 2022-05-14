@@ -1,5 +1,6 @@
 import { gql } from 'apollo-server-express';
 import authType from './auth';
+import userType from './user';
 
 const rootQuerySchema = gql`
   type Query {
@@ -23,4 +24,4 @@ const rootMutationSchema = gql`
   }
 `;
 
-export const typeDefs = [authType, devRequestType, rootQuerySchema, rootMutationSchema];
+export const typeDefs = [userType, authType, devRequestType, rootQuerySchema, rootMutationSchema];
