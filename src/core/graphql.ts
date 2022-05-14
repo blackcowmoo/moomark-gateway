@@ -4,6 +4,10 @@ import { resolvers } from '@/graphql/resolvers';
 
 type Header = [string, any];
 
+export interface Route {
+  [KEY: string]: string;
+}
+
 export default new ApolloServer({
   typeDefs,
   resolvers,

@@ -4,7 +4,7 @@ export default gql`
   type Login {
     token: String!
     refreshToken: String!
-    # user: User
+    user: User!
   }
 
   # type Mutation {
