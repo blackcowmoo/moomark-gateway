@@ -14,6 +14,8 @@ export const testRequest: RequestHandler = async (req, res) => {
 
   if (Object.keys(endpoints).includes(service)) {
     const headers = omit(req.headers, 'host');
+    console.log(endpoints[service].endpoint);
+
     const result = await axios({
       method: req.method as Method,
       baseURL: endpoints[service].endpoint,
