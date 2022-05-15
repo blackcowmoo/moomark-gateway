@@ -30,6 +30,8 @@ export const testRequest: RequestHandler = async (req, res) => {
       };
     });
 
+    console.log(result);
+
     res.status(result.status).header(result.headers).send(result.data);
   } else {
     res.status(200).send('');
