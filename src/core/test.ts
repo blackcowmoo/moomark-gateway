@@ -22,6 +22,7 @@ export const testRequest: RequestHandler = async (req, res) => {
       headers: headers || {},
       params: req.query || {},
     }).catch((err) => {
+      console.error(err.response);
       return {
         status: err.response?.status || 500,
         data: err.response?.data || err.message,
