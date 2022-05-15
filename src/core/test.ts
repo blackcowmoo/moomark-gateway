@@ -13,11 +13,13 @@ export const testRequest: RequestHandler = async (req, res) => {
   const [service, ...url] = req.params[0].split('/');
 
   if (Object.keys(endpoints).includes(service)) {
-    const headers = omit(req.headers, 'host');
+    const headers = omit(req.headers, 'host', 'x-forward-proto');
 
+    const { origin, pathname } = new URL(endpoints[service].endpoint);
     const result = await axios({
       method: req.method as Method,
-      url: `${endpoints[service].endpoint}/${url.join('/')}`,
+      baseURL: origin,
+      url: `${pathname}/${url.join('/')}`,
       data: req.body || {},
       headers: headers || {},
       params: req.query || {},
