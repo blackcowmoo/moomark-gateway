@@ -20,7 +20,7 @@ export const testRequest: RequestHandler = async (req, res) => {
     const result = await axios({
       method: req.method as Method,
       baseURL: origin,
-      url: `${pathname}/${url.join('/')}`,
+      url: `${pathname}/${url.join('/')}`.replace(/[\\/]+/g, '/'),
       data: req.body || {},
       headers: headers || {},
       params: req.query || {},
