@@ -34,7 +34,7 @@ export const testRequest: RequestHandler = async (req, res) => {
     });
 
     Object.entries(result.headers).forEach(([key, value]) => {
-      if (value && !['host', 'connection', 'transfer-encoding', 'x-envoy-upstream-service-time', 'server'].includes(key)) {
+      if (value && !['host', 'connection', 'transfer-encoding'].includes(key)) {
         console.log('header', key, value);
         res.setHeader(key, value as string);
       }
