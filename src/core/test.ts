@@ -34,16 +34,16 @@ export const testRequest: RequestHandler = async (req, res) => {
     });
 
     Object.entries(result.headers).forEach(([key, value]) => {
-      if (value && !['host'].includes(key)) {
+      if (value && !['host', 'connection', 'transfer-encoding', 'x-envoy-upstream-service-time', 'server'].includes(key)) {
         console.log('header', key, value);
         res.setHeader(key, value as string);
       }
     });
 
-    if (typeof result.data === 'string') {
-      res.status(result.status).send(result.data);
-    } else {
+    if (result.headers['content-type'] === 'application/json') {
       res.status(result.status).json(result.data);
+    } else {
+      res.status(result.status).send(result.data);
     }
   } else {
     res.status(200).send('');
