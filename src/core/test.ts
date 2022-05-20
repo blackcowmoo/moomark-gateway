@@ -36,7 +36,7 @@ export const testRequest: RequestHandler = async (req, res) => {
     console.log(result);
 
     if (result.headers['content-type'] === 'application/json') {
-      res.status(result.status).header(result.headers).send(result.data.trim().toString('utf8'));
+      res.status(result.status).header(result.headers).send(JSON.stringify(result.data));
     } else {
       res.status(result.status).header(result.headers).send(result.data);
     }
