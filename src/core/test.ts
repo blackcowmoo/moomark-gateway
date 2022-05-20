@@ -33,11 +33,11 @@ export const testRequest: RequestHandler = async (req, res) => {
       };
     });
 
-    // Object.entries(result.headers).forEach(([key, value]) => {
-    //   if (value && !['host'].includes(key)) {
-    //     res.setHeader(key, value as string);
-    //   }
-    // });
+    Object.entries(result.headers).forEach(([key, value]) => {
+      if (value && !['host'].includes(key)) {
+        res.setHeader(key, value as string);
+      }
+    });
 
     if (typeof result.data === 'string') {
       res.status(result.status).send(result.data);
