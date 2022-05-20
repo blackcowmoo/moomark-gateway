@@ -33,10 +33,10 @@ export const testRequest: RequestHandler = async (req, res) => {
       };
     });
 
-    console.log(result);
+    console.log(JSON.stringify(result.data));
 
     if (result.headers['content-type'] === 'application/json') {
-      res.status(result.status).header(result.headers).send(JSON.stringify(result.data));
+      res.status(result.status).header(result.headers).json(JSON.stringify(result.data));
     } else {
       res.status(result.status).header(result.headers).send(result.data);
     }
