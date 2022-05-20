@@ -33,13 +33,13 @@ export const testRequest: RequestHandler = async (req, res) => {
       };
     });
 
-    console.log(JSON.stringify(result.data));
+    Object.entries(result.headers).forEach(([key, value]) => {
+      if (value && !['host'].includes(key)) {
+        res.setHeader(key, value as string);
+      }
+    });
 
-    if (result.headers['content-type'] === 'application/json') {
-      res.status(result.status).header(result.headers).json(JSON.stringify(result.data));
-    } else {
-      res.status(result.status).header(result.headers).send(result.data);
-    }
+    res.status(result.status).send(result.data);
   } else {
     res.status(200).send('');
   }
