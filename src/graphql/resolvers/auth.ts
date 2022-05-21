@@ -1,5 +1,5 @@
 import { GraphQLContext } from '@/core/graphql';
-import { getUser, googleLogin, User as UserType } from '@/requests/auth';
+import { getUser, googleLogin, User as UserType, withdrawUser } from '@/requests/auth';
 
 export const Query = {
   user: async (_, __, { user }: GraphQLContext): Promise<UserType> => {
@@ -28,5 +28,13 @@ export const Mutation = {
     }
 
     return null;
+  },
+
+  withdraw: async (_, __, { routes, user, token }: GraphQLContext): Promise<boolean> => {
+    if (user) {
+      return withdrawUser(token, routes);
+    }
+
+    return false;
   },
 };

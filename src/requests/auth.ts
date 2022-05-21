@@ -32,6 +32,14 @@ export const getUser = async (token: string, routes): Promise<User> => {
   return result.data;
 };
 
+export const withdrawUser = async (token: string, routes): Promise<boolean> => {
+  const result = await authAxios.delete('/api/v1/user', {
+    headers: { authorization: token, ...routes },
+  });
+
+  return result.status === 200;
+};
+
 export const googleLogin = async (code: string, routes: Route): Promise<LoginTokens> => {
   const result = await authAxios.get('/api/v1/oauth2/google', {
     params: { code },

@@ -12,6 +12,7 @@ export interface Route {
 export interface GraphQLContext {
   routes: Route;
   user?: User;
+  token?: string;
 }
 
 export default new ApolloServer({
@@ -19,7 +20,7 @@ export default new ApolloServer({
   resolvers,
   introspection: IS_DEV,
   playground: IS_DEV,
-  context: async ({ req }) => {
+  context: async ({ req }): Promise<GraphQLContext> => {
     let routes = {};
     if (IS_DEV) {
       routes = Object.entries(req.headers)
@@ -37,6 +38,6 @@ export default new ApolloServer({
       }
     }
 
-    return { routes, user };
+    return { routes, user, token: req.headers.authorization };
   },
 });
