@@ -1,13 +1,13 @@
 import { assert } from 'chai';
 import { graphqlRequest, graphql } from '@/test/utils/app';
-import { testCode } from '@/test/utils/user';
+import { generateTestCode } from '@/test/utils/user';
 
 describe('GraphQL', () => {
   let code = null;
   let token = null;
 
   before(() => {
-    code = testCode();
+    code = generateTestCode();
   });
 
   it('Login', async () => {
