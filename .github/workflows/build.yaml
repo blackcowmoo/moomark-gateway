@@ -34,3 +34,4 @@ jobs:
         run: yarn test
         env:
           CI: true
+          AUTH_SERVICE_HOST: ${{ secrets.AUTH_SERVICE_HOST }}
