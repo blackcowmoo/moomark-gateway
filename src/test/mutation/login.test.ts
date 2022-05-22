@@ -66,6 +66,25 @@ describe('GraphQL', () => {
     assert.equal(body.data.me.role, 'USER');
   });
 
+  it('Me (no token)', async () => {
+    const query = graphql`
+      {
+        me {
+          id
+          name
+          email
+          nickname
+          picture
+          role
+        }
+      }
+    `;
+
+    const { status, body } = await graphqlRequest(query);
+
+    assert.equal(status, 401);
+  });
+
   after(async () => {
     const query = graphql`
       mutation {
