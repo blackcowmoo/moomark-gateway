@@ -10,7 +10,7 @@ const rootQuerySchema = gql`
     servers: String!
 
     # auth
-    user: User
+    me: User
   }
 `;
 

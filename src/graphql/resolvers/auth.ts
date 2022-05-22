@@ -2,7 +2,7 @@ import { GraphQLContext } from '@/core/graphql';
 import { getUser, googleLogin, User as UserType, withdrawUser } from '@/requests/auth';
 
 export const Query = {
-  user: async (_, __, { user }: GraphQLContext): Promise<UserType> => {
+  me: async (_, __, { user }: GraphQLContext): Promise<UserType> => {
     return user;
   },
 };
