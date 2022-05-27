@@ -3,7 +3,6 @@ import { gql } from 'apollo-server-express';
 import directives from './directives';
 import authType from './auth';
 import userType from './user';
-import { devRequestType } from './test';
 
 const rootQuerySchema = gql`
   type Query {
