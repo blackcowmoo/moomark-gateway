@@ -32,6 +32,12 @@ export const getUser = async (token: string, routes): Promise<User> => {
   return result.data;
 };
 
+export const renewRefreshToken = async (refreshToken: string, routes): Promise<LoginTokens> => {
+  const result = await authAxios.post('/api/v1/oauth2/refresh', { refreshToken }, { headers: routes });
+
+  return result.data;
+};
+
 export const withdrawUser = async (token: string, routes): Promise<boolean> => {
   const result = await authAxios.delete('/api/v1/user', {
     headers: { authorization: token, ...routes },
