@@ -9,9 +9,8 @@ describe('GraphQL', () => {
       }
     `;
 
-    const { status, body } = await graphqlRequest(query);
+    const { data } = await graphqlRequest(query);
 
-    assert.equal(status, 200);
-    assert.equal(body.data.healthz, 'OK');
+    assert.equal(data.healthz, 'OK');
   });
 });

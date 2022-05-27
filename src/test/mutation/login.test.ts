@@ -26,19 +26,18 @@ describe('GraphQL', () => {
       }
     `;
 
-    const { status, body } = await graphqlRequest(query, { variables: { code } });
+    const { data } = await graphqlRequest(query, { variables: { code } });
 
-    assert.equal(status, 200);
-    assert.isNotEmpty(body.data.login.token);
-    assert.isNotEmpty(body.data.login.refreshToken);
-    assert.equal(body.data.login.user.id, `TEST@${code.split('-')[1]}`);
-    assert.equal(body.data.login.user.name, 'test');
-    assert.equal(body.data.login.user.email, 'test@blackcowmoo.com');
-    assert.equal(body.data.login.user.nickname, 'test');
-    assert.equal(body.data.login.user.picture, 'https://www.gravatar.com/avatar/HASH');
-    assert.equal(body.data.login.user.role, 'USER');
+    assert.isNotEmpty(data.login.token);
+    assert.isNotEmpty(data.login.refreshToken);
+    assert.equal(data.login.user.id, `TEST@${code.split('-')[1]}`);
+    assert.equal(data.login.user.name, 'test');
+    assert.equal(data.login.user.email, 'test@blackcowmoo.com');
+    assert.equal(data.login.user.nickname, 'test');
+    assert.equal(data.login.user.picture, 'https://www.gravatar.com/avatar/HASH');
+    assert.equal(data.login.user.role, 'USER');
 
-    token = body.data.login.token;
+    token = data.login.token;
   });
 
   it('Me', async () => {
@@ -55,15 +54,14 @@ describe('GraphQL', () => {
       }
     `;
 
-    const { status, body } = await graphqlRequest(query, { headers: { Authorization: token } });
+    const { data } = await graphqlRequest(query, { headers: { Authorization: token } });
 
-    assert.equal(status, 200);
-    assert.equal(body.data.me.id, `TEST@${code.split('-')[1]}`);
-    assert.equal(body.data.me.name, 'test');
-    assert.equal(body.data.me.email, 'test@blackcowmoo.com');
-    assert.equal(body.data.me.nickname, 'test');
-    assert.equal(body.data.me.picture, 'https://www.gravatar.com/avatar/HASH');
-    assert.equal(body.data.me.role, 'USER');
+    assert.equal(data.me.id, `TEST@${code.split('-')[1]}`);
+    assert.equal(data.me.name, 'test');
+    assert.equal(data.me.email, 'test@blackcowmoo.com');
+    assert.equal(data.me.nickname, 'test');
+    assert.equal(data.me.picture, 'https://www.gravatar.com/avatar/HASH');
+    assert.equal(data.me.role, 'USER');
   });
 
   it('Me (no token)', async () => {
@@ -80,9 +78,9 @@ describe('GraphQL', () => {
       }
     `;
 
-    const { status, body } = await graphqlRequest(query);
+    const { http } = await graphqlRequest(query);
 
-    assert.equal(status, 401);
+    assert.equal(http.status, 401);
   });
 
   after(async () => {
@@ -92,9 +90,8 @@ describe('GraphQL', () => {
       }
     `;
 
-    const { status, body } = await graphqlRequest(query, { headers: { Authorization: token } });
+    const { data } = await graphqlRequest(query, { headers: { Authorization: token } });
 
-    assert.equal(status, 200);
-    assert.isTrue(body.data.withdraw);
+    assert.isTrue(data.withdraw);
   });
 });
