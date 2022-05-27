@@ -5,6 +5,7 @@ import { generateTestCode } from '@/test/utils/user';
 describe('GraphQL', () => {
   let code = null;
   let token = null;
+  let refreshToken = null;
 
   before(async () => {
     code = generateTestCode();
@@ -38,6 +39,7 @@ describe('GraphQL', () => {
     assert.equal(data.login.user.role, 'USER');
 
     token = data.login.token;
+    refreshToken = data.login.refreshToken;
   });
 
   it('Me', async () => {
@@ -81,6 +83,52 @@ describe('GraphQL', () => {
     const { http } = await graphqlRequest(query);
 
     assert.equal(http.status, 401);
+  });
+
+  it('Me (refresh token => access token)', async () => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const mutation = graphql`
+      mutation Refresh($refreshToken: String!) {
+        refreshToken(refreshToken: $refreshToken) {
+          token
+          refreshToken
+          user {
+            id
+          }
+        }
+      }
+    `;
+
+    const { data } = await graphqlRequest(mutation, { variables: { refreshToken }, headers: { Authorization: token } });
+
+    assert.notEqual(token, data.refreshToken.token);
+    assert.notEqual(refreshToken, data.refreshToken.refreshToken);
+    assert.equal(data.refreshToken.user.id, `TEST@${code.split('-')[1]}`);
+    assert.isUndefined(data.refreshToken.user.name);
+
+    token = data.refreshToken.token;
+
+    const query = graphql`
+      {
+        me {
+          id
+          name
+          email
+          nickname
+          picture
+          role
+        }
+      }
+    `;
+
+    const { data: resutlData } = await graphqlRequest(query, { headers: { Authorization: token } });
+
+    assert.equal(resutlData.me.id, `TEST@${code.split('-')[1]}`);
+    assert.equal(resutlData.me.name, 'test');
+    assert.equal(resutlData.me.email, 'test@blackcowmoo.com');
+    assert.equal(resutlData.me.nickname, 'test');
+    assert.equal(resutlData.me.picture, 'https://www.gravatar.com/avatar/HASH');
+    assert.equal(resutlData.me.role, 'USER');
   });
 
   after(async () => {
