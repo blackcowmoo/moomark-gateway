@@ -1,5 +1,8 @@
-import app from '@/core/app';
+import getApp from '@/core/app';
 
-app.listen(7000, () => {
-  console.log('Start API Gateway');
-});
+(async () => {
+  const app = await getApp();
+  app.listen(7000, () => {
+    console.log('Start API Gateway');
+  });
+})();

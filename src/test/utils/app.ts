@@ -2,7 +2,9 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import { Response } from 'superagent';
 
-import app from '@/core/app';
+import getApp from '@/core/app';
+import createGraphqlServer from '@/core/graphql';
+import { Headers } from 'apollo-server-env';
 
 chai.use(chaiHttp);
 
@@ -13,6 +15,7 @@ interface ChaiRequest {
 }
 
 export const request = async (method: 'get' | 'post', path: string, { headers, body, query }: ChaiRequest) => {
+  const app = await getApp();
   const r = chai.request(app)[method](path);
 
   if (headers) {
@@ -50,10 +53,11 @@ interface GraphqlOption {
 
 export const graphql = (query: TemplateStringsArray) => query.join('');
 export const graphqlRequest = async (query: string, { headers, variables }: GraphqlOption = {}) => {
-  const body: any = { query };
-  if (variables && Object.keys(variables).length) {
-    body.variables = variables;
-  }
-
-  return postRequest('/graphql', { headers, body });
+  const graphqlServer = createGraphqlServer(headers);
+  return graphqlServer.executeOperation({
+    query,
+    variables: { ...variables, testHeaders: headers },
+    extensions: headers,
+    http: { headers: new Headers(headers), url: '/graphql', method: 'POST' },
+  });
 };

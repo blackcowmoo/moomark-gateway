@@ -1,18 +1,21 @@
 import express from 'express';
-import graphqlServer from './graphql';
+import createGraphqlServer from './graphql';
 import { testRequest } from './test';
 
-const app = express();
-app.disable('x-powered-by');
-app.use(express.json());
+export default async () => {
+  const app = express();
+  app.disable('x-powered-by');
+  app.use(express.json());
 
-// For kubernetes
-app.get('/healthz', (req, res) => {
-  res.send('OK');
-});
+  // For kubernetes
+  app.get('/healthz', (req, res) => {
+    res.send('OK');
+  });
 
-app.use('/test/**', testRequest);
+  app.use('/test/**', testRequest);
+  const graphqlServer = createGraphqlServer();
+  await graphqlServer.start();
+  graphqlServer.applyMiddleware({ app, path: '/graphql' });
 
-graphqlServer.applyMiddleware({ app, path: '/graphql' });
-
-export default app;
+  return app;
+};
