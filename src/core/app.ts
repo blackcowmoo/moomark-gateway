@@ -13,7 +13,7 @@ export default async () => {
   });
 
   app.use('/test/**', testRequest);
-  const graphqlServer = await createGraphqlServer();
+  const graphqlServer = createGraphqlServer();
   await graphqlServer.start();
   graphqlServer.applyMiddleware({ app, path: '/graphql' });
 
