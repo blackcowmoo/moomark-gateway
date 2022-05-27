@@ -34,7 +34,7 @@ export const Mutation = {
     return null;
   },
 
-  refresh: async (_, { refreshToken }, { routes }: GraphQLContext): Promise<LoginInput> => {
+  refreshToken: async (_, { refreshToken }, { routes }: GraphQLContext): Promise<LoginInput> => {
     const { token, refreshToken: newRefreshToken } = await renewRefreshToken(refreshToken, routes);
 
     return {

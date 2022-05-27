@@ -17,7 +17,7 @@ const rootQuerySchema = gql`
 const rootMutationSchema = gql`
   type Mutation {
     login(type: String!, code: String!): Login!
-    refresh(refreshToken: String!): Login!
+    refreshToken(refreshToken: String!): Login!
     withdraw: Boolean!
   }
 `;

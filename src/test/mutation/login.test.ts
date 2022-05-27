@@ -89,7 +89,7 @@ describe('GraphQL', () => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     const mutation = graphql`
       mutation Refresh($refreshToken: String!) {
-        refresh(refreshToken: $refreshToken) {
+        refreshToken(refreshToken: $refreshToken) {
           token
           refreshToken
           user {
@@ -101,12 +101,12 @@ describe('GraphQL', () => {
 
     const { data } = await graphqlRequest(mutation, { variables: { refreshToken }, headers: { Authorization: token } });
 
-    assert.notEqual(token, data.refresh.token);
-    assert.notEqual(refreshToken, data.refresh.refreshToken);
-    assert.equal(data.refresh.user.id, `TEST@${code.split('-')[1]}`);
-    assert.isUndefined(data.refresh.user.name);
+    assert.notEqual(token, data.refreshToken.token);
+    assert.notEqual(refreshToken, data.refreshToken.refreshToken);
+    assert.equal(data.refreshToken.user.id, `TEST@${code.split('-')[1]}`);
+    assert.isUndefined(data.refreshToken.user.name);
 
-    token = data.refresh.token;
+    token = data.refreshToken.token;
 
     const query = graphql`
       {

@@ -1,4 +1,5 @@
 import { endpoints } from '@/core/config';
+import { GraphQLException } from '@/core/exception';
 import { Route } from '@/core/graphql';
 import axios from 'axios';
 
@@ -34,6 +35,9 @@ export const getUser = async (token: string, routes): Promise<User> => {
 
 export const renewRefreshToken = async (refreshToken: string, routes): Promise<LoginTokens> => {
   const result = await authAxios.post('/api/v1/oauth2/refresh', { refreshToken }, { headers: routes });
+  if (result.status === 401) {
+    throw new GraphQLException(401, 'Unauthorized');
+  }
 
   return result.data;
 };
