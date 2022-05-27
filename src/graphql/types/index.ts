@@ -21,4 +21,4 @@ const rootMutationSchema = gql`
   }
 `;
 
-export const typeDefs = [directives, userType, authType, devRequestType, rootQuerySchema, rootMutationSchema];
+export const typeDefs = [directives, userType, authType, rootQuerySchema, rootMutationSchema];
