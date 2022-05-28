@@ -101,7 +101,7 @@
 
 <h2>Coverage Report</h2>
 
-Commit: <a href="{commit_link}">{short_commit_sha}</a><br>
+Commit: <a href="{commit_link}">{short_commit_sha}</a><br><br>
 
 <table>
   <thead>
