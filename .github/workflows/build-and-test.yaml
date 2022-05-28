@@ -63,4 +63,4 @@ jobs:
           coverage_output_directory: 'coverage'
           comment_mode: new
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          comment_template_file: .coverage-comment-template.md
+          comment_template_file: '.coverage-comment-template.svelte'
