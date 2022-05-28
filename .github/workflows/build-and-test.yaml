@@ -31,7 +31,7 @@ jobs:
         run: yarn build
 
       - name: Run test
-        run: yarn test:report
+        run: mkdir -p tests && yarn test:report
         env:
           CI: true
           AUTH_SERVICE_HOST: ${{ secrets.AUTH_SERVICE_HOST }}
@@ -52,5 +52,5 @@ jobs:
         with:
           artifact: test-results
           name: mocha tests
-          path: ${{ github.workspace }}/test-results.json
+          path: tests/*.json
           reporter: mocha-json
