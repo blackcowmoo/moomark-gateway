@@ -5,3 +5,5 @@ yarn-error.log
 .vscode
 .env
 .env.sh
+
+test-results.json

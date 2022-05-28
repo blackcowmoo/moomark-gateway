@@ -31,7 +31,19 @@ jobs:
         run: yarn build
 
       - name: Run test
-        run: yarn test
+        run: yarn test:report
         env:
           CI: true
           AUTH_SERVICE_HOST: ${{ secrets.AUTH_SERVICE_HOST }}
+
+      - name: test result
+        run: cat ./test-results.json
+        if: always()
+
+      - uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          artifact: test-results
+          name: JEST Tests
+          path: 'test-results.json'
+          reporter: mocha-json
