@@ -53,3 +53,9 @@ jobs:
           name: mocha tests
           path: test-results.json
           reporter: mocha-json
+
+      - uses: tintef/nyc-reporter-action
+        if: always()
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPORTER: 'text'
