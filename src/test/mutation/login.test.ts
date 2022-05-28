@@ -140,6 +140,6 @@ describe('GraphQL', () => {
 
     const { data } = await graphqlRequest(query, { headers: { Authorization: token } });
 
-    assert.isFalse(data.withdraw);
+    assert.isTrue(data.withdraw);
   });
 });
