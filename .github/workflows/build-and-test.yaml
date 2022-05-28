@@ -45,5 +45,5 @@ jobs:
         with:
           artifact: test-results
           name: JEST Tests
-          path: 'test-results.json'
+          path: ./test-results.json
           reporter: mocha-json
