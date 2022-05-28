@@ -1,7 +1,11 @@
 dist/
+coverage/
+.nyc_output/
 node_modules
 node_modules/
 yarn-error.log
 .vscode
 .env
 .env.sh
+
+test-results.json
