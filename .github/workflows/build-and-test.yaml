@@ -59,3 +59,5 @@ jobs:
         if: always()
         with:
           coverage_output_directory: 'coverage'
+          comment_mode: new
+          github_token: ${{ secrets.GITHUB_TOKEN }}
