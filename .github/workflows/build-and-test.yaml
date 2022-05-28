@@ -52,5 +52,5 @@ jobs:
         with:
           artifact: test-results
           name: JEST Tests
-          path: ./test-results.json
+          path: ${{ github.workspace }}/test-results.json
           reporter: mocha-json
