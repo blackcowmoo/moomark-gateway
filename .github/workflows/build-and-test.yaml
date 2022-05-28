@@ -31,7 +31,7 @@ jobs:
         run: yarn build
 
       - name: Run test
-        run: yarn test:report:coverage
+        run: yarn test:coverage:report
         env:
           CI: true
           AUTH_SERVICE_HOST: ${{ secrets.AUTH_SERVICE_HOST }}
@@ -54,8 +54,8 @@ jobs:
           path: test-results.json
           reporter: mocha-json
 
-      - uses: tintef/nyc-reporter-action@master
+      - name: Report NYC coverage
+        uses: sidx1024/report-nyc-coverage-github-action@v1.1
         if: always()
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPORTER: 'text'
+          coverage_output_directory: 'coverage'
