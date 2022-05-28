@@ -9,6 +9,7 @@
     "dev": "NODE_ENV=test nodemon src/index.ts --legacy-watch src/* --exec babel-node --extensions \".ts,.tsx\"",
     "start": "node ./dist/index.js",
     "test": "NODE_ENV=test mocha -t 10000 -r ./src/test/utils/babel.js ./src/test/*.test.ts ./src/test/**/*.test.ts",
+    "test:coverage": "nyc yarn test",
     "test:report": "NODE_ENV=test mocha --reporter json -t 10000 -r ./src/test/utils/babel.js ./src/test/*.test.ts ./src/test/**/*.test.ts > ./test-results.json",
     "test:report:coverage": "nyc --reporter=json yarn test:report",
     "lint": "eslint src/**/*.ts",
