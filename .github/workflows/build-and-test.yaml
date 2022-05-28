@@ -36,6 +36,13 @@ jobs:
           CI: true
           AUTH_SERVICE_HOST: ${{ secrets.AUTH_SERVICE_HOST }}
 
+      - uses: izhangzhihao/delete-comment@master
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          delete_user_name: github-actions[bot]
+          issue_number: ${{ github.event.number }}
+
       - name: test result
         run: cat ./test-results.json
         if: always()
