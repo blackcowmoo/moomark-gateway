@@ -51,6 +51,5 @@ jobs:
         if: always()
         with:
           artifact: test-results
-          name: mocha tests
-          path: "*.json"
+          path: ${{ github.workspace }}/*.json
           reporter: mocha-json
