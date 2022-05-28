@@ -50,6 +50,6 @@ jobs:
       - uses: dorny/test-reporter@v1
         if: always()
         with:
-          artifact: test-results
-          path: ${{ github.workspace }}/*.json
+          name: mocha tests
+          path: test-results.json
           reporter: mocha-json
