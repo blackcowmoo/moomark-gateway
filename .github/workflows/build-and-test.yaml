@@ -52,5 +52,5 @@ jobs:
         with:
           artifact: test-results
           name: mocha tests
-          path: tests/*.json
+          path: "*.json"
           reporter: mocha-json
