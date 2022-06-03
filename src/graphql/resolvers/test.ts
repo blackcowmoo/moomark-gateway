@@ -23,7 +23,7 @@ export const Query = {
       }),
     );
 
-    return pings.join('\n');
+    return pings.join(', ');
   },
 };
 
