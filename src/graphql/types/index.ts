@@ -8,7 +8,7 @@ const rootQuerySchema = gql`
   type Query {
     # test
     healthz: String!
-    servers: String!
+    servers: String! @dev
 
     me: User @auth
   }
