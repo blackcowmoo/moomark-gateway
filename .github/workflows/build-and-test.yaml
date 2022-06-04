@@ -37,6 +37,7 @@ jobs:
         env:
           CI: true
           AUTH_SERVICE_HOST: ${{ secrets.AUTH_SERVICE_HOST }}
+          POST_SERVICE_HOST: ${{ secrets.POST_SERVICE_HOST }}
 
       - uses: izhangzhihao/delete-comment@master
         if: always()
