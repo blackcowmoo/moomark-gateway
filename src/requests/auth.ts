@@ -1,31 +1,14 @@
 import { endpoints } from '@/core/config';
 import { GraphQLException } from '@/core/exception';
-import { Route } from '@/core/graphql';
 import axios from 'axios';
 
-interface LoginTokens {
-  token: string;
-  refreshToken: string;
-}
-
-export interface User {
-  authProvider: string;
-  id: string;
-  name: string;
-  email: string;
-  nickname: string;
-  picture: string;
-  role: string;
-}
-
-const authServerHost = endpoints.auth.endpoint;
 const authAxios = axios.create({
-  baseURL: authServerHost,
+  baseURL: endpoints.auth.endpoint,
   maxRedirects: 0,
   headers: { Accept: 'application/json' },
 });
 
-export const getUser = async (token: string, routes): Promise<User> => {
+export const getUser = async (token: string, routes: Route): Promise<User> => {
   const result = await authAxios.get('/api/v1/user', {
     headers: { authorization: token, ...routes },
   });
@@ -33,7 +16,7 @@ export const getUser = async (token: string, routes): Promise<User> => {
   return result.data;
 };
 
-export const renewRefreshToken = async (refreshToken: string, routes): Promise<LoginTokens> => {
+export const renewRefreshToken = async (refreshToken: string, routes: Route): Promise<LoginTokens> => {
   const result = await authAxios.post('/api/v1/oauth2/refresh', { refreshToken }, { headers: routes });
   if (result.status === 401) {
     throw new GraphQLException(401, 'Unauthorized');
@@ -42,7 +25,7 @@ export const renewRefreshToken = async (refreshToken: string, routes): Promise<L
   return result.data;
 };
 
-export const withdrawUser = async (token: string, routes): Promise<boolean> => {
+export const withdrawUser = async (token: string, routes: Route): Promise<boolean> => {
   const result = await authAxios.delete('/api/v1/user', {
     headers: { authorization: token, ...routes },
   });

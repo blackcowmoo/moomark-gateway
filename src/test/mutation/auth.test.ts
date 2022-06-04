@@ -1,15 +1,14 @@
 import { assert } from 'chai';
 import { graphqlRequest, graphql } from '@/test/utils/app';
-import { generateTestCode } from '@/test/utils/user';
+import { generateTestCode } from '@/test/utils/auth';
 
-describe('GraphQL', () => {
-  let code = null;
+describe('Auth', () => {
+  const code = generateTestCode();
+
   let token = null;
   let refreshToken = null;
 
   before(async () => {
-    code = generateTestCode();
-
     const query = graphql`
       mutation Login($code: String!) {
         login(type: "Google", code: $code) {

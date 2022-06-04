@@ -6,19 +6,9 @@ import { typeDefs } from '@/graphql/types';
 import { resolvers } from '@/graphql/resolvers';
 import { directives } from '@/graphql/directives';
 import { formatException } from '@/graphql/plugins/exception';
-import { getUser, User } from '@/requests/auth';
+import { getUser } from '@/requests/auth';
 
 import { IS_DEV, IS_TEST } from './config';
-
-export interface Route {
-  [KEY: string]: string;
-}
-
-export interface GraphQLContext {
-  routes: Route;
-  user?: User;
-  token?: string;
-}
 
 export default (headers?: any) =>
   new ApolloServer({
