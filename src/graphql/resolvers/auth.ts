@@ -1,26 +1,21 @@
-import { GraphQLContext } from '@/core/graphql';
-import { getUser, googleLogin, renewRefreshToken, User as UserType, withdrawUser } from '@/requests/auth';
-
-interface LoginInput {
-  token: string;
-  refreshToken: string;
-}
+import { getUser, googleLogin, renewRefreshToken, withdrawUser } from '@/requests/auth';
+import { buildUserId } from '@/utils/user';
 
 export const Query = {
-  me: async (_, __, { user }: GraphQLContext): Promise<UserType> => {
+  me: async (_, __, { user }: GraphQLContext): Promise<User> => {
     return user;
   },
 };
 
 export const Login = {
-  user: async ({ token }: LoginInput, __, { routes }: GraphQLContext): Promise<UserType> => {
+  user: async ({ token }: LoginInput, __, { routes }: GraphQLContext): Promise<User> => {
     return getUser(token, routes);
   },
 };
 
 export const User = {
-  id: ({ id, authProvider }): string => {
-    return `${authProvider}@${id}`;
+  id: (user: User): string => {
+    return buildUserId(user);
   },
 };
 
