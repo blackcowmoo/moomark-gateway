@@ -1,4 +1,4 @@
-// import { assert } from 'chai';
+import { assert } from 'chai';
 import { graphqlRequest, graphql } from '@/test/utils/app';
 import { getTestToken, withdrawTestUser } from '@/test/utils/auth';
 
@@ -32,8 +32,11 @@ describe('Post', () => {
 
     const { errors, data } = await graphqlRequest(mutation, { variables: { post }, headers: { Authorization: token } });
 
-    console.log(data);
-    console.log(errors);
+    assert.equal(errors, null);
+    assert.equal(data.writePost.title, post.title);
+    assert.equal(data.writePost.content, post.content);
+    assert.equal(data.writePost.viewsCount, 0);
+    assert.equal(data.writePost.recommendCount, 0);
   });
 
   after(async () => {
