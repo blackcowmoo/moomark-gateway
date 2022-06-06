@@ -1,6 +1,6 @@
 import { assert } from 'chai';
-import { graphqlRequest, graphql } from '@test/utils/app';
-import { getMe, getTestToken, withdrawTestUser } from '@test/utils/auth';
+import { graphqlRequest, graphql } from '@/test/utils/app';
+import { getMe, getTestToken, withdrawTestUser } from '@/test/utils/auth';
 
 describe('Post', () => {
   let token = null;

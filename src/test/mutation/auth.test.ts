@@ -1,6 +1,6 @@
 import { assert } from 'chai';
-import { graphqlRequest, graphql } from '@test/utils/app';
-import { generateTestCode } from '@test/utils/auth';
+import { graphqlRequest, graphql } from '@/test/utils/app';
+import { generateTestCode } from '@/test/utils/auth';
 
 describe('Auth', () => {
   const code = generateTestCode();
