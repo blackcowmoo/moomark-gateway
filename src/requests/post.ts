@@ -5,16 +5,22 @@ import axios from 'axios';
 const postAxios = axios.create({
   baseURL: endpoints.post.endpoint,
   maxRedirects: 0,
-  headers: { Accept: 'application/json', 'X-MOOM-ROUTE-MOOMARK-POST': '12' },
+  headers: { Accept: 'application/json' },
 });
+
+export const listPost = async (offset: number, limit: number, routes: Route): Promise<Post> => {
+  const { data } = await postAxios.get('/api/v1/posts', {
+    params: { offset, limit },
+    headers: routes,
+  });
+
+  return data;
+};
 
 export const writePost = async (post: PostInput, user: User, routes: Route): Promise<Post> => {
   const result = await postAxios.post(
     '/api/v1/post',
-    {
-      title: post.title,
-      content: post.content,
-    },
+    { title: post.title, content: post.content },
     {
       headers: {
         'x-moom-user-id': buildUserId(user),
