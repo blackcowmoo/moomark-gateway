@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { graphqlRequest, graphql } from '@/test/utils/app';
-import { getTestToken, withdrawTestUser } from '@/test/utils/auth';
+import { getMe, getTestToken, withdrawTestUser } from '@/test/utils/auth';
 
 describe('Post', () => {
   let token = null;
@@ -14,12 +14,14 @@ describe('Post', () => {
       mutation Post($post: PostInput!) {
         writePost(post: $post) {
           id
-          userId
           title
           content
           uploadTime
           recommendCount
           viewsCount
+          user {
+            id
+          }
         }
       }
     `;
@@ -36,6 +38,9 @@ describe('Post', () => {
     assert.equal(data.writePost.content, post.content);
     assert.equal(data.writePost.viewsCount, 0);
     assert.equal(data.writePost.recommendCount, 0);
+
+    const me = await getMe(token);
+    assert.equal(data.writePost.user.id, me.id);
   });
 
   it('List post', async () => {
@@ -43,7 +48,6 @@ describe('Post', () => {
       mutation Post($post: PostInput!) {
         writePost(post: $post) {
           id
-          userId
           title
           content
           uploadTime
@@ -70,7 +74,6 @@ describe('Post', () => {
       query posts($offset: Int, $limit: Int) {
         posts(offset: $offset, limit: $limit) {
           id
-          userId
           title
           content
           uploadTime

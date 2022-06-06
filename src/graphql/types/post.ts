@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 export default gql`
   type Post {
     id: Int!
-    userId: String!
+    user: User!
     title: String!
     content: String!
     uploadTime: String!
