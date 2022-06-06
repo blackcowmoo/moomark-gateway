@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { getRequest } from '@/test/utils/app';
+import { getRequest } from '@test/utils/app';
 
 describe('Express', () => {
   it('Run', async () => {

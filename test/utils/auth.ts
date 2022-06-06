@@ -1,4 +1,4 @@
-import { graphqlRequest, graphql } from '@/test/utils/app';
+import { graphqlRequest, graphql } from '@test/utils/app';
 
 export const generateTestCode = () => `test-${Number(Math.random().toString().replace('0.', '')).toString()}`;
 

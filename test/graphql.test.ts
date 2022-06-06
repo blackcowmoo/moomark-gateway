@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { graphqlRequest, graphql } from '@/test/utils/app';
+import { graphqlRequest, graphql } from '@test/utils/app';
 
 describe('GraphQL', () => {
   it('Run', async () => {

@@ -3,7 +3,7 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
-    "paths": { "@/*": ["./*"] },
+    "paths": { "@/*": ["./*"], "@test": ["./test"] },
     "baseUrl": "./src"
   },
   "exclude": ["node_modules"]
