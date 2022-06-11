@@ -1,5 +1,5 @@
 import { getUser, getUserById, googleLogin, renewRefreshToken, withdrawUser } from '@/requests/auth';
-import { buildUserId, userIsEqual } from '@/utils/user';
+import { buildUserId, userEqual } from '@/utils/user';
 
 export const Query = {
   me: async (_, __, { user }: GraphQLContext): Promise<User> => {
@@ -18,7 +18,7 @@ const fetchUser = async <K extends keyof User>(user: UserPartial, userContext: U
     return user[key];
   }
 
-  if (userIsEqual(user, userContext)) {
+  if (userEqual(user, userContext)) {
     return userContext[key];
   }
 

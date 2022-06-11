@@ -7,6 +7,6 @@ export const parseUserId = (userId: string): UserId => {
   return { authProvider, id: id.join('@') };
 };
 
-export const userIsEqual = (userA: UserId, userB: UserId): boolean => {
+export const userEqual = (userA: UserId, userB: UserId): boolean => {
   return userA.authProvider === userB.authProvider && userA.id === userB.id;
 };
