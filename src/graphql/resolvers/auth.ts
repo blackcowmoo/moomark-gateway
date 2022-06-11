@@ -1,3 +1,4 @@
+import { WITHDRAWN_USER_ROLE, WITHDRAWN_USER_TEXT } from '@/models/const';
 import { getUser, getUserById, googleLogin, renewRefreshToken, withdrawUser } from '@/requests/auth';
 import { buildUserId, userEqual } from '@/utils/user';
 
@@ -13,7 +14,13 @@ export const Login = {
   },
 };
 
-const fetchUser = async <K extends keyof User>(user: UserPartial, userContext: User, key: K, routes?: Route): Promise<User[K]> => {
+const fetchUser = async <K extends keyof User>(
+  user: UserPartial,
+  userContext: Null<User>,
+  key: K,
+  defaultValue?: User[K],
+  routes?: Route,
+): Promise<User[K]> => {
   if (user[key] !== undefined) {
     return user[key];
   }
@@ -22,7 +29,12 @@ const fetchUser = async <K extends keyof User>(user: UserPartial, userContext: U
     return userContext[key];
   }
 
-  return (await getUserById(buildUserId(user), routes || {}))[key];
+  const userData = await getUserById(buildUserId(user), routes || {});
+  if (userData) {
+    return userData[key];
+  }
+
+  return defaultValue;
 };
 
 export const User = {
@@ -30,16 +42,16 @@ export const User = {
     return buildUserId(user);
   },
   email: async (user: UserPartial, _, { user: userContext, routes }: GraphQLContext): Promise<string> => {
-    return fetchUser(user, userContext, 'email', routes);
+    return fetchUser(user, userContext, 'email', WITHDRAWN_USER_TEXT, routes);
   },
   nickname: async (user: UserPartial, _, { user: userContext, routes }: GraphQLContext): Promise<string> => {
-    return fetchUser(user, userContext, 'nickname', routes);
+    return fetchUser(user, userContext, 'nickname', WITHDRAWN_USER_TEXT, routes);
   },
   picture: async (user: UserPartial, _, { user: userContext, routes }: GraphQLContext): Promise<string> => {
-    return fetchUser(user, userContext, 'picture', routes);
+    return fetchUser(user, userContext, 'picture', WITHDRAWN_USER_TEXT, routes);
   },
   role: async (user: UserPartial, _, { user: userContext, routes }: GraphQLContext): Promise<string> => {
-    return fetchUser(user, userContext, 'role', routes);
+    return fetchUser(user, userContext, 'role', WITHDRAWN_USER_ROLE, routes);
   },
 };
 
