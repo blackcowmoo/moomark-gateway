@@ -7,7 +7,6 @@ export const getMe = async (token: string): Promise<User> => {
     {
       me {
         id
-        name
         email
         nickname
         picture

@@ -16,7 +16,6 @@ describe('Auth', () => {
           refreshToken
           user {
             id
-            name
             email
             nickname
             picture
@@ -31,7 +30,6 @@ describe('Auth', () => {
     assert.isNotEmpty(data.login.token);
     assert.isNotEmpty(data.login.refreshToken);
     assert.equal(data.login.user.id, `TEST@${code.split('-')[1]}`);
-    assert.equal(data.login.user.name, 'test');
     assert.equal(data.login.user.email, 'test@blackcowmoo.com');
     assert.equal(data.login.user.nickname, 'test');
     assert.equal(data.login.user.picture, 'https://www.gravatar.com/avatar/HASH');
@@ -46,7 +44,6 @@ describe('Auth', () => {
       {
         me {
           id
-          name
           email
           nickname
           picture
@@ -58,7 +55,6 @@ describe('Auth', () => {
     const { data } = await graphqlRequest(query, { headers: { Authorization: token } });
 
     assert.equal(data.me.id, `TEST@${code.split('-')[1]}`);
-    assert.equal(data.me.name, 'test');
     assert.equal(data.me.email, 'test@blackcowmoo.com');
     assert.equal(data.me.nickname, 'test');
     assert.equal(data.me.picture, 'https://www.gravatar.com/avatar/HASH');
@@ -70,7 +66,6 @@ describe('Auth', () => {
       {
         me {
           id
-          name
           email
           nickname
           picture
@@ -111,7 +106,6 @@ describe('Auth', () => {
       {
         me {
           id
-          name
           email
           nickname
           picture
@@ -123,7 +117,6 @@ describe('Auth', () => {
     const { data: resutlData } = await graphqlRequest(query, { headers: { Authorization: token } });
 
     assert.equal(resutlData.me.id, `TEST@${code.split('-')[1]}`);
-    assert.equal(resutlData.me.name, 'test');
     assert.equal(resutlData.me.email, 'test@blackcowmoo.com');
     assert.equal(resutlData.me.nickname, 'test');
     assert.equal(resutlData.me.picture, 'https://www.gravatar.com/avatar/HASH');
