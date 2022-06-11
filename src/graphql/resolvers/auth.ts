@@ -1,5 +1,5 @@
-import { getUser, googleLogin, renewRefreshToken, withdrawUser } from '@/requests/auth';
-import { buildUserId } from '@/utils/user';
+import { getUser, getUserById, googleLogin, renewRefreshToken, withdrawUser } from '@/requests/auth';
+import { buildUserId, userIsEqual } from '@/utils/user';
 
 export const Query = {
   me: async (_, __, { user }: GraphQLContext): Promise<User> => {
@@ -13,9 +13,33 @@ export const Login = {
   },
 };
 
+const fetchUser = async <K extends keyof User>(user: UserPartial, userContext: User, key: K, routes?: Route): Promise<User[K]> => {
+  if (user[key] !== undefined) {
+    return user[key];
+  }
+
+  if (userIsEqual(user, userContext)) {
+    return userContext[key];
+  }
+
+  return (await getUserById(buildUserId(user), routes || {}))[key];
+};
+
 export const User = {
-  id: (user: User): string => {
+  id: (user: UserPartial): string => {
     return buildUserId(user);
+  },
+  email: async (user: UserPartial, _, { user: userContext, routes }: GraphQLContext): Promise<string> => {
+    return fetchUser(user, userContext, 'email', routes);
+  },
+  nickname: async (user: UserPartial, _, { user: userContext, routes }: GraphQLContext): Promise<string> => {
+    return fetchUser(user, userContext, 'nickname', routes);
+  },
+  picture: async (user: UserPartial, _, { user: userContext, routes }: GraphQLContext): Promise<string> => {
+    return fetchUser(user, userContext, 'picture', routes);
+  },
+  role: async (user: UserPartial, _, { user: userContext, routes }: GraphQLContext): Promise<string> => {
+    return fetchUser(user, userContext, 'role', routes);
   },
 };
 

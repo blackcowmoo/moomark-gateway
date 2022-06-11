@@ -1,5 +1,6 @@
 import { endpoints } from '@/core/config';
 import { GraphQLException } from '@/core/exception';
+import { parseUserId } from '@/utils/user';
 import axios from 'axios';
 
 const authAxios = axios.create({
@@ -7,6 +8,13 @@ const authAxios = axios.create({
   maxRedirects: 0,
   headers: { Accept: 'application/json' },
 });
+
+export const getUserById = async (userId: string, routes: Route): Promise<User> => {
+  const { authProvider, id } = parseUserId(userId);
+  const result = await authAxios.get(`/api/v1/user/${authProvider}/${id}`, { headers: routes });
+
+  return result.data;
+};
 
 export const getUser = async (token: string, routes: Route): Promise<User> => {
   const result = await authAxios.get('/api/v1/user', {
