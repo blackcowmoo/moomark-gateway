@@ -9,4 +9,5 @@ interface Post extends PostInput {
   uploadTime?: string;
   recommendCount?: number;
   viewsCount?: number;
+  user?: User;
 }

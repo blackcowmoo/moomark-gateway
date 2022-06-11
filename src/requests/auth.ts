@@ -9,9 +9,15 @@ const authAxios = axios.create({
   headers: { Accept: 'application/json' },
 });
 
-export const getUserById = async (userId: string, routes: Route): Promise<User> => {
+export const getUserById = async (userId: string, routes: Route): Promise<User | null> => {
   const { authProvider, id } = parseUserId(userId);
-  const result = await authAxios.get(`/api/v1/user/${authProvider}/${id}`, { headers: routes });
+  const result = await authAxios.get(`/api/v1/user/${authProvider}/${id}`, { headers: routes }).catch((error) => {
+    if (error.response && error.response.status === 404) {
+      return { data: null };
+    }
+
+    throw error;
+  });
 
   return result.data;
 };
