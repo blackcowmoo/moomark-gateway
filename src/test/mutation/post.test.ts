@@ -21,6 +21,10 @@ describe('Post', () => {
           viewsCount
           user {
             id
+            nickname
+            email
+            picture
+            role
           }
         }
       }
@@ -41,6 +45,10 @@ describe('Post', () => {
 
     const me = await getMe(token);
     assert.equal(data.writePost.user.id, me.id);
+    assert.equal(data.writePost.user.nickname, me.nickname);
+    assert.equal(data.writePost.user.email, me.email);
+    assert.equal(data.writePost.user.picture, me.picture);
+    assert.equal(data.writePost.user.role, me.role);
   });
 
   it('List post', async () => {

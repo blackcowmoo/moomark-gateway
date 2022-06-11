@@ -17,3 +17,6 @@ interface User {
   picture: string;
   role: string;
 }
+
+type UserId = Pick<User, 'authProvider' | 'id'>;
+type UserPartial = UserId & Partial<User>;
