@@ -11,3 +11,8 @@ interface Post extends PostInput {
   viewsCount?: number;
   user?: User;
 }
+
+interface PostMetadata {
+  total: number;
+  posts: Post[];
+}
