@@ -12,7 +12,7 @@ const rootQuerySchema = gql`
     servers: String! @dev
 
     me: User @auth
-    posts(offset: Int, limit: Int): [Post]!
+    listPosts(offset: Int, limit: Int): PostMetadata!
   }
 `;
 

@@ -66,21 +66,23 @@ describe('Post', () => {
     const { id } = writePostData;
     const query = graphql`
       query posts($offset: Int, $limit: Int) {
-        posts(offset: $offset, limit: $limit) {
-          id
-          title
-          content
-          uploadTime
-          recommendCount
-          viewsCount
+        listPosts(offset: $offset, limit: $limit) {
+          posts {
+            id
+            title
+            content
+            uploadTime
+            recommendCount
+            viewsCount
+          }
         }
       }
     `;
 
     const { data: queryData } = await graphqlRequest(query, { variables: { offset: id + 1, limit: 1 } });
-    assert.equal(queryData.posts.length, 1);
+    assert.equal(queryData.listPosts.posts.length, 1);
 
-    const postData = queryData.posts[0];
+    const postData = queryData.listPosts.posts[0];
 
     assert.equal(postData.id, id);
     assert.equal(postData.title, postTitle);
@@ -102,22 +104,24 @@ describe('Post', () => {
     const { id } = writePostData;
     const query = graphql`
       query posts($offset: Int, $limit: Int) {
-        posts(offset: $offset, limit: $limit) {
-          user {
-            id
-            nickname
-            email
-            picture
-            role
+        listPosts(offset: $offset, limit: $limit) {
+          posts {
+            user {
+              id
+              nickname
+              email
+              picture
+              role
+            }
           }
         }
       }
     `;
 
     const { data: queryData } = await graphqlRequest(query, { variables: { offset: id + 1, limit: 1 } });
-    assert.equal(queryData.posts.length, 1);
+    assert.equal(queryData.listPosts.posts.length, 1);
 
-    const postData = queryData.posts[0];
+    const postData = queryData.listPosts.posts[0];
 
     assert.equal(postData.user.nickname, WITHDRAWN_USER_TEXT);
     assert.equal(postData.user.email, WITHDRAWN_USER_TEXT);

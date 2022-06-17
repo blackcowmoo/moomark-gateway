@@ -8,7 +8,7 @@ const postAxios = axios.create({
   headers: { Accept: 'application/json' },
 });
 
-export const listPost = async (offset: number, limit: number, routes: Route): Promise<Post> => {
+export const listPosts = async (offset: number, limit: number, routes: Route): Promise<Post[]> => {
   const { data } = await postAxios.get('/api/v1/posts', {
     params: { offset, limit },
     headers: routes,

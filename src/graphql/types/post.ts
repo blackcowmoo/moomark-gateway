@@ -16,4 +16,9 @@ export default gql`
     title: String!
     content: String!
   }
+
+  type PostMetadata {
+    total: Int!
+    posts: [Post]!
+  }
 `;
