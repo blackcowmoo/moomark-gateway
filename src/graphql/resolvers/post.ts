@@ -8,6 +8,9 @@ export const Post = {
       id,
     };
   },
+  content: ({ content }, { length }): string => {
+    return length > 0 ? content.substring(0, length) : content;
+  },
 };
 
 export const Query = {

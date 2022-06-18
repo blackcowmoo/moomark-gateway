@@ -5,7 +5,7 @@ export default gql`
     id: Int!
     user: User!
     title: String!
-    content: String!
+    content(length: Int): String!
     uploadTime: String!
     recommendCount: Int!
     viewsCount: Int!

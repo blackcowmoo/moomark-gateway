@@ -129,6 +129,48 @@ describe('Post', () => {
     assert.equal(postData.user.role, WITHDRAWN_USER_ROLE);
   });
 
+  it('List post (Content length)', async () => {
+    const postTitle = 'TestPostTitle';
+    const postContent = 'A한B글';
+    const writePostData = await writePost(postTitle, postContent);
+
+    assert.equal(writePostData.title, postTitle);
+    assert.equal(writePostData.content, postContent);
+    assert.equal(writePostData.viewsCount, 0);
+    assert.equal(writePostData.recommendCount, 0);
+
+    const { id } = writePostData;
+    const query = graphql`
+      query posts($offset: Int, $limit: Int) {
+        listPosts(offset: $offset, limit: $limit) {
+          posts {
+            title
+            content(length: 3)
+            user {
+              id
+              nickname
+              email
+              picture
+              role
+            }
+          }
+        }
+      }
+    `;
+
+    const { data: queryData } = await graphqlRequest(query, { variables: { offset: id + 1, limit: 1 } });
+    assert.equal(queryData.listPosts.posts.length, 1);
+
+    const postData = queryData.listPosts.posts[0];
+
+    assert.equal(postData.title, postTitle);
+    assert.equal(postData.content, postContent.substring(0, 3));
+    assert.equal(postData.user.nickname, WITHDRAWN_USER_TEXT);
+    assert.equal(postData.user.email, WITHDRAWN_USER_TEXT);
+    assert.equal(postData.user.picture, WITHDRAWN_USER_TEXT);
+    assert.equal(postData.user.role, WITHDRAWN_USER_ROLE);
+  });
+
   after(async () => {
     await withdrawTestUser(token);
   });
