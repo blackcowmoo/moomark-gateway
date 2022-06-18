@@ -67,6 +67,7 @@ describe('Post', () => {
     const query = graphql`
       query posts($offset: Int, $limit: Int) {
         listPosts(offset: $offset, limit: $limit) {
+          total
           posts {
             id
             title
@@ -81,6 +82,7 @@ describe('Post', () => {
 
     const { data: queryData } = await graphqlRequest(query, { variables: { offset: id + 1, limit: 1 } });
     assert.equal(queryData.listPosts.posts.length, 1);
+    assert.isTrue(queryData.listPosts.total > 0);
 
     const postData = queryData.listPosts.posts[0];
 
