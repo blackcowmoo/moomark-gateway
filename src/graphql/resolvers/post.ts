@@ -1,4 +1,4 @@
-import { listPosts, listPostsCount, writePost } from '@/requests/post';
+import { getPost, listPosts, listPostsCount, writePost } from '@/requests/post';
 
 export const Post = {
   user: async ({ userId }) => {
@@ -19,6 +19,9 @@ export const Query = {
       total: await listPostsCount(routes),
       posts: await listPosts(offset, limit, routes),
     };
+  },
+  post: async (_, { id }, { routes }: GraphQLContext): Promise<Post> => {
+    return getPost(id, routes);
   },
 };
 
