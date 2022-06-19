@@ -173,6 +173,60 @@ describe('Post', () => {
     assert.equal(postData.user.role, WITHDRAWN_USER_ROLE);
   });
 
+  it('Get post', async () => {
+    const postTitle = 'TestPostTitle';
+    const postContent = 'A한B글';
+    const writePostData = await writePost(postTitle, postContent);
+
+    assert.equal(writePostData.title, postTitle);
+    assert.equal(writePostData.content, postContent);
+    assert.equal(writePostData.viewsCount, 0);
+    assert.equal(writePostData.recommendCount, 0);
+
+    const { id } = writePostData;
+    const query = graphql`
+      query posts($offset: Int, $limit: Int) {
+        listPosts(offset: $offset, limit: $limit) {
+          posts {
+            id
+            title
+            content(length: 3)
+            user {
+              id
+              nickname
+              email
+              picture
+              role
+            }
+          }
+        }
+      }
+    `;
+
+    const { data: queryData } = await graphqlRequest(query, { variables: { offset: id + 1, limit: 2 } });
+    const postData = queryData.listPosts.posts[1];
+
+    const postQuery = graphql`
+      query post($id: Int!) {
+        post(id: $id) {
+          title
+          content(length: 3)
+          user {
+            id
+            nickname
+            email
+            picture
+            role
+          }
+        }
+      }
+    `;
+
+    const { data: postQueryData } = await graphqlRequest(postQuery, { variables: { id: postData.id } });
+    assert.equal(postQueryData.post.title, postData.title);
+    assert.equal(postQueryData.post.content, postData.content);
+  });
+
   after(async () => {
     await withdrawTestUser(token);
   });

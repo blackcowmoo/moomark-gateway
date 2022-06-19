@@ -8,6 +8,12 @@ const postAxios = axios.create({
   headers: { Accept: 'application/json' },
 });
 
+export const getPost = async (id: number, routes: Route): Promise<Post> => {
+  const { data } = await postAxios.get(`/api/v1/post/${id}`, { headers: routes });
+
+  return data;
+};
+
 export const listPostsCount = async (routes: Route): Promise<number> => {
   const { data } = await postAxios.get('/api/v1/posts/count', { headers: routes });
 
