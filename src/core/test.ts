@@ -16,7 +16,6 @@ export const testRequest: RequestHandler = async (req, res) => {
     const headers = omit(req.headers, 'host', 'x-forward-proto');
 
     const { origin, pathname } = new URL(endpoints[service].endpoint);
-    console.log(endpoints[service].endpoint, origin, pathname);
     const result = await axios({
       method: req.method as Method,
       baseURL: origin,
@@ -35,7 +34,6 @@ export const testRequest: RequestHandler = async (req, res) => {
 
     Object.entries(result.headers).forEach(([key, value]) => {
       if (value && !['host', 'connection', 'transfer-encoding'].includes(key)) {
-        console.log('header', key, value);
         res.setHeader(key, value as string);
       }
     });
