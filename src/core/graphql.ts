@@ -6,7 +6,7 @@ import { typeDefs } from '@/graphql/types';
 import { resolvers } from '@/graphql/resolvers';
 import { directives } from '@/graphql/directives';
 import { formatException } from '@/graphql/plugins/exception';
-import { getUser } from '@/requests/auth';
+import { getPassport, getUser } from '@/requests/auth';
 
 import { IS_DEV, IS_TEST } from './config';
 
@@ -33,6 +33,7 @@ export default (headers?: any) =>
       }
 
       let user: User | null = null;
+      let passport: string | null = null;
       if (req?.headers?.authorization) {
         // TODO cache (with redis)
         try {
@@ -40,8 +41,14 @@ export default (headers?: any) =>
         } catch {
           user = null;
         }
+
+        try {
+          passport = await getPassport(req.headers.authorization, routes);
+        } catch {
+          passport = null;
+        }
       }
 
-      return { routes, user, token: req?.headers?.authorization };
+      return { routes, user, token: req?.headers?.authorization, passport };
     },
   });
