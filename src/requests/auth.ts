@@ -1,5 +1,6 @@
 import { endpoints } from '@/core/config';
 import { GraphQLException } from '@/core/exception';
+import { PASSPORT_HEADER_KEY } from '@/models/const';
 import { parseUserId } from '@/utils/user';
 import axios from 'axios';
 
@@ -22,6 +23,14 @@ export const getUserById = async (userId: string, routes: Route): Promise<User |
   return result.data;
 };
 
+export const getPassport = async (token: string, routes: Route): Promise<string> => {
+  const result = await authAxios.get('/api/v1/passport', {
+    headers: { authorization: token, ...routes },
+  });
+
+  return result.data;
+};
+
 export const getUser = async (token: string, routes: Route): Promise<User> => {
   const result = await authAxios.get('/api/v1/user', {
     headers: { authorization: token, ...routes },
@@ -32,6 +41,15 @@ export const getUser = async (token: string, routes: Route): Promise<User> => {
 
 export const renewRefreshToken = async (refreshToken: string, routes: Route): Promise<LoginTokens> => {
   const result = await authAxios.post('/api/v1/oauth2/refresh', { refreshToken }, { headers: routes });
+  if (result.status === 401) {
+    throw new GraphQLException(401, 'Unauthorized');
+  }
+
+  return result.data;
+};
+
+export const updateUserInfo = async (passport: string, nickname: string, picture: string, routes: Route): Promise<User> => {
+  const result = await authAxios.put('/api/v1/user', { nickname, picture }, { headers: { [PASSPORT_HEADER_KEY]: passport, ...routes } });
   if (result.status === 401) {
     throw new GraphQLException(401, 'Unauthorized');
   }

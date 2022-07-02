@@ -19,9 +19,12 @@ const rootQuerySchema = gql`
 
 const rootMutationSchema = gql`
   type Mutation {
+    # User
     login(type: String!, code: String!): Login!
     refreshToken(refreshToken: String!): Login!
+    updateUserInfo(nickname: String, picture: String): User @auth
     withdraw: Boolean! @auth
+    # Post
     writePost(post: PostInput!): Post! @auth
   }
 `;

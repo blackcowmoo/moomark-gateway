@@ -2,7 +2,8 @@ import { assert } from 'chai';
 import { graphqlRequest, graphql } from '@/test/utils/app';
 import { getMe, getTestToken, withdrawTestUser } from '@/test/utils/auth';
 import { writePost } from '@/test/utils/post';
-import { WITHDRAWN_USER_ROLE, WITHDRAWN_USER_TEXT } from '@/models/const';
+import { WITHDRAWN_USER_ROLE } from '@/models/const';
+import { WITHDRAWN_USER_TEXT } from '@/models/l10n';
 
 describe('Post', () => {
   let token = null;

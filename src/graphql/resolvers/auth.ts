@@ -1,5 +1,6 @@
-import { WITHDRAWN_USER_ROLE, WITHDRAWN_USER_TEXT } from '@/models/const';
-import { getUser, getUserById, googleLogin, renewRefreshToken, withdrawUser } from '@/requests/auth';
+import { WITHDRAWN_USER_ROLE } from '@/models/const';
+import { WITHDRAWN_USER_TEXT } from '@/models/l10n';
+import { getUser, getUserById, googleLogin, renewRefreshToken, updateUserInfo, withdrawUser } from '@/requests/auth';
 import { buildUserId, userEqual } from '@/utils/user';
 
 export const Query = {
@@ -72,6 +73,10 @@ export const Mutation = {
       token,
       refreshToken: newRefreshToken,
     };
+  },
+
+  updateUserInfo: async (_, { nickname, picture }, { routes, passport }: GraphQLContext): Promise<User> => {
+    return updateUserInfo(passport, nickname, picture, routes);
   },
 
   withdraw: async (_, __, { routes, user, token }: GraphQLContext): Promise<boolean> => {
