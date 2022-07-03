@@ -1,5 +1,5 @@
 import { endpoints } from '@/core/config';
-import { buildUserId } from '@/utils/user';
+import { PASSPORT_HEADER_KEY } from '@/models/const';
 import axios from 'axios';
 
 const postAxios = axios.create({
@@ -29,13 +29,13 @@ export const listPosts = async (offset: number, limit: number, routes: Route): P
   return data;
 };
 
-export const writePost = async (post: PostInput, user: User, routes: Route): Promise<Post> => {
+export const writePost = async (post: PostInput, passport: string, routes: Route): Promise<Post> => {
   const result = await postAxios.post(
     '/api/v1/post',
     { title: post.title, content: post.content },
     {
       headers: {
-        'x-moom-user-id': buildUserId(user),
+        [PASSPORT_HEADER_KEY]: passport,
         ...routes,
       },
     },
