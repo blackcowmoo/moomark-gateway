@@ -26,7 +26,7 @@ export const Query = {
 };
 
 export const Mutation = {
-  writePost: async (_, { post }: { post: PostInput }, { user, routes }: GraphQLContext): Promise<Post> => {
-    return writePost(post, user, routes);
+  writePost: async (_, { post }: { post: PostInput }, { passport, routes }: GraphQLContext): Promise<Post> => {
+    return writePost(post, passport, routes);
   },
 };
