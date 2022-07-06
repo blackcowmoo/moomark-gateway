@@ -1,4 +1,5 @@
 import { getPost, listPosts, listPostsCount, writePost } from '@/requests/post';
+import removeMd from 'remove-markdown';
 
 export const Post = {
   user: async ({ userId }) => {
@@ -8,8 +9,9 @@ export const Post = {
       id,
     };
   },
-  content: ({ content }, { length }): string => {
-    return length > 0 ? content.substring(0, length) : content;
+  content: ({ content }, { length }, { removeMarkdown }): string => {
+    const removeContent = removeMarkdown ? removeMd(content.replace(/```([\s\S]*?)```/g, '').replace(/~~~([\s\S]*?)~~~/g, '')) : content;
+    return length > 0 ? removeContent.substring(0, length) : content;
   },
 };
 
