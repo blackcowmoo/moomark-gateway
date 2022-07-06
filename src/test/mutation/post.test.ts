@@ -190,7 +190,7 @@ describe('Post', () => {
         listPosts(offset: $offset, limit: $limit) {
           posts {
             title
-            content(length: 5, removeMarkdown: true)
+            content(removeMarkdown: true)
             user {
               id
               nickname
@@ -207,7 +207,7 @@ describe('Post', () => {
     assert.equal(queryData.listPosts.posts.length, 1);
 
     const postData = queryData.listPosts.posts[0];
-    const removedContent = 'Conte';
+    const removedContent = 'Content test for removeMarkdown option';
 
     assert.equal(postData.title, postTitle);
     assert.equal(postData.content, removedContent);

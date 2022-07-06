@@ -9,9 +9,18 @@ export const Post = {
       id,
     };
   },
-  content: ({ content }, { length }, { removeMarkdown }): string => {
-    const removeContent = removeMarkdown ? removeMd(content.replace(/```([\s\S]*?)```/g, '').replace(/~~~([\s\S]*?)~~~/g, '')) : content;
-    return length > 0 ? removeContent.substring(0, length) : content;
+  content: ({ content }, { length, removeMarkdown }): string => {
+    const filteredContent = removeMarkdown
+      ? removeMd(
+          content
+            .replace(/(?<=(^#)\s).*/gm, '')
+            .replace(/```([\s\S]*?)```/g, '')
+            .replace(/~~~([\s\S]*?)~~~/g, ''),
+        )
+      : content;
+    console.log(filteredContent);
+
+    return length > 0 ? filteredContent.substring(0, length) : filteredContent;
   },
 };
 
