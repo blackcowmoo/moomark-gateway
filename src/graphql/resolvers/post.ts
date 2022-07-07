@@ -18,8 +18,6 @@ export const Post = {
             .replace(/~~~([\s\S]*?)~~~/g, ''),
         )
       : content;
-    console.log(filteredContent);
-
     return length > 0 ? filteredContent.substring(0, length) : filteredContent;
   },
 };
