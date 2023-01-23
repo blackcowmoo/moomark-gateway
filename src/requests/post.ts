@@ -29,7 +29,7 @@ export const listPosts = async (offset: number, limit: number, routes: Route): P
   return data;
 };
 
-export const writePost = async (post: PostInput, passport: string, routes: Route): Promise<Post> => {
+export const writePost = async (post: PostInput, passport: Passport, routes: Route): Promise<Post> => {
   const result = await postAxios.post(
     '/api/v1/post',
     { title: post.title, content: post.content },
