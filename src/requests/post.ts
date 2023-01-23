@@ -1,5 +1,5 @@
 import { endpoints } from '@/core/config';
-import { PASSPORT_HEADER_KEY } from '@/models/const';
+import { PASSPORT_HEADER_KEY, PASSPORT_HEADER_USER } from '@/models/const';
 import axios from 'axios';
 
 const postAxios = axios.create({
@@ -29,13 +29,14 @@ export const listPosts = async (offset: number, limit: number, routes: Route): P
   return data;
 };
 
-export const writePost = async (post: PostInput, passport: string, routes: Route): Promise<Post> => {
+export const writePost = async (post: PostInput, passport: Passport, routes: Route): Promise<Post> => {
   const result = await postAxios.post(
     '/api/v1/post',
     { title: post.title, content: post.content },
     {
       headers: {
-        [PASSPORT_HEADER_KEY]: passport,
+        [PASSPORT_HEADER_USER]: passport.passport,
+        [PASSPORT_HEADER_KEY]: passport.key,
         ...routes,
       },
     },

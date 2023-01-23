@@ -18,5 +18,10 @@ interface User {
   role: string;
 }
 
+interface Passport {
+  key: string;
+  passport: string;
+}
+
 type UserId = Pick<User, 'authProvider' | 'id'>;
 type UserPartial = UserId & Partial<User>;

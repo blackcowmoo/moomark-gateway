@@ -6,5 +6,5 @@ interface GraphQLContext {
   routes: Route;
   user?: User;
   token?: string;
-  passport?: string;
+  passport?: Passport;
 }

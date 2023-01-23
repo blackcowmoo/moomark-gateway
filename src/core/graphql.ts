@@ -33,7 +33,7 @@ export default (headers?: any) =>
       }
 
       let user: User | null = null;
-      let passport: string | null = null;
+      let passport: Passport | null = null;
       if (req?.headers?.authorization) {
         // TODO cache (with redis)
         try {
