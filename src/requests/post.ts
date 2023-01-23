@@ -1,5 +1,5 @@
 import { endpoints } from '@/core/config';
-import { PASSPORT_HEADER_KEY } from '@/models/const';
+import { PASSPORT_HEADER_KEY, PASSPORT_HEADER_USER } from '@/models/const';
 import axios from 'axios';
 
 const postAxios = axios.create({
@@ -35,7 +35,8 @@ export const writePost = async (post: PostInput, passport: Passport, routes: Rou
     { title: post.title, content: post.content },
     {
       headers: {
-        [PASSPORT_HEADER_KEY]: passport,
+        [PASSPORT_HEADER_USER]: passport.passport,
+        [PASSPORT_HEADER_KEY]: passport.key,
         ...routes,
       },
     },
